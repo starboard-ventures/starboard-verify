@@ -32,12 +32,6 @@ Or if you are using TypeScript, in your `hardhat.config.ts`:
 import "starboard-hardhat-verify";
 ```
 
-## Tasks
-
-This plugin adds the `starboard-verify` task to Hardhat:
-```bash
-npx hardhat starboard-verify <CONTRACT_NAME> <CONTRACT_ADDRESS>
-```
 
 ## Configuration
 
@@ -64,3 +58,11 @@ module.exports = {
     },
 };
 ```
+
+## Tasks
+
+This plugin adds the `starboard-verify` task to Hardhat:
+```bash
+npx hardhat starboard-verify <CONTRACT_NAME> <CONTRACT_ADDRESS>
+```
+
