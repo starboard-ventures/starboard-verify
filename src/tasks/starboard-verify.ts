@@ -7,9 +7,6 @@ import {
   HardhatRuntimeEnvironment,
   TaskArguments,
 } from "hardhat/types";
-import fetch from "node-fetch";
-import path from "path";
-import fse from 'fs-extra'
 import FormData from 'form-data'
 import { fetchVerify } from "../service";
 
@@ -20,7 +17,6 @@ task("starboard-verify", "Verify smart contract on Starboard blockchain explorer
     args: TaskArguments,
     { config, artifacts }: HardhatRuntimeEnvironment
   ) {
-    // console.log('%c [ config ]-20', 'font-size:13px; background:pink; color:#bf2c9f;', config)
     if (!validateArgs(args)) {
       throw new NomicLabsHardhatPluginError(
         "@starboard/hardhat-verify",
@@ -34,16 +30,8 @@ task("starboard-verify", "Verify smart contract on Starboard blockchain explorer
       );
     }
     const { contractName, contractAddress } = args
-    // const artifact = await artifacts.readArtifact(contractName)
-
 
     const starboardConfig = config.starboardConfig;
-    // const starboardVerify = new StarboardVerify({
-    //   contractAddress: contractAddress,
-    //   contractName: contractName,
-    //   baseURL: starboardConfig.baseURL,
-    //   network: starboardConfig.network,
-    // })
     const buildInfo = await getBuildInfo(contractName, artifacts)
     if (!buildInfo) {
       throw new NomicLabsHardhatPluginError(
@@ -77,40 +65,6 @@ task("starboard-verify", "Verify smart contract on Starboard blockchain explorer
         (e as { message: string })?.message || "Failed to verify contract"
       );
     }
-    // // console.log('%c [ s1 ]-29', 'font-size:13px; background:pink; color:#bf2c9f;', s1)
-    // const s2 = await artifacts.getAllFullyQualifiedNames()
-    // const fn = s2.find(s => s.split(':').pop() === contractName)
-    // const [pn, cn] = fn!?.split(':')
-    // if (!fn) return;
-    // const buildInfo = await artifacts.getBuildInfo(fn)
-    // const info = buildInfo?.output.contracts[pn]! as unknown as { [k: string]: { metadata: string } }
-    // const contractMeta = info[cn]?.metadata
-    // fse.writeFileSync('./out.json', contractMeta)
-    // const formData = new FormData()
-
-    // console.log('%c [ Object.entries(JSON.parse(contractMeta).sources) ]-41', 'font-size:13px; background:pink; color:#bf2c9f;', Object.keys(JSON.parse(contractMeta).sources))
-    // formData.append('metadata.json', Buffer.from(contractMeta), 'metadata.json')
-    // Object.entries(JSON.parse(contractMeta).sources as { [k: string]: { content: string } }).map(([k, v]) => {
-    //   formData.append(k, Buffer.from(v.content), k)
-    // })
-    // console.log(formData)
-    // try {
-    //   const response = await starboardVerify.verify();
-    //   if (response?.code === 0) {
-    //     console.log(`${contractName} is verified`);
-    //   } else {
-    //     throw new NomicLabsHardhatPluginError(
-    //       "@starboard/hardhat-verify",
-    //       response.message || "Failed to verify contract"
-    //     );
-    //   }
-    // } catch (e) {
-    //   console.error('Error', e)
-    //   throw new NomicLabsHardhatPluginError(
-    //     "@starboard/hardhat-verify",
-    //     (e as { message: string })?.message || "Failed to verify contract"
-    //   );
-    // }
   });
 
 
@@ -124,7 +78,6 @@ async function getBuildInfo(contractName: string, artifacts: Artifacts) {
 }
 
 async function createVerifyBody(contractName: string, buildInfo: any) {
-  // const buildInfo = await this.getBuildInfo();
   const contractMeta = buildInfo[contractName]?.metadata
   const formData = new FormData()
   //required metadata file.
