@@ -1,12 +1,12 @@
 {
   "name": "starboard-hardhat-verify",
-  "version": "0.1.0-beta3",
+  "version": "0.1.0-beta4",
   "description": "Hardhat plugin for solidity contract verification on Starboard block explorer",
   "repository": "github:starboard-ventures/starboard-verify.git",
   "author": "jerry",
   "license": "MIT",
-  "main": "dist/src/index.js",
-  "types": "dist/src/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "keywords": [
     "ethereum",
     "smart-contracts",
@@ -24,8 +24,7 @@
     "prepublishOnly": "npm run build"
   },
   "files": [
-    "dist/src/",
-    "src/",
+    "dist/",
     "LICENSE",
     "README.md"
   ],

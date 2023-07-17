@@ -1,7 +1,7 @@
 import FormData from 'form-data'
 import hre from 'hardhat'
 import { fetchVerify, getBuildInfo, createFormData, writeMetaFile } from './common'
-import { VerifyArgs, VerifyArgsCaller, VerifyResponse, NetworkHost, Networks } from './types'
+import { VerifyArgs, VerifyResponse, NetworkHost, Networks } from './types'
 
 export const generateMetadata = async (contractName: string) => {
   const exist = await checkExist(contractName)
