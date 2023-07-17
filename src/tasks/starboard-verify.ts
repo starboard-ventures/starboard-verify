@@ -1,21 +1,19 @@
 import { task, types } from "hardhat/config";
 import { NomicLabsHardhatPluginError } from "hardhat/plugins";
 import {
-  Artifact,
   Artifacts,
   HardhatConfig,
   HardhatRuntimeEnvironment,
   TaskArguments,
 } from "hardhat/types";
-import FormData from 'form-data'
-import { fetchVerify } from "../service";
+import { fetchVerify, writeMetaFile, createFormData, getBuildInfo } from "../common";
 
 task("starboard-verify", "Verify smart contract on Starboard blockchain explorer.")
   .addPositionalParam("contractName", "Name of the contract to be verified.", "", types.string)
-  .addPositionalParam("contractAddress", "Deployed contract address", "", types.string)
+  .addPositionalParam("contractAddress", "Deployed contract address or metadata", "", types.string)
   .setAction(async function (
     args: TaskArguments,
-    { config, artifacts }: HardhatRuntimeEnvironment
+    { config, artifacts, run }: HardhatRuntimeEnvironment
   ) {
     if (!validateArgs(args)) {
       throw new NomicLabsHardhatPluginError(
@@ -23,6 +21,10 @@ task("starboard-verify", "Verify smart contract on Starboard blockchain explorer
         "Missing args for this task"
       );
     }
+    if (!await artifacts.artifactExists(args.contractName)) {
+      await run('compile')
+    }
+
     if (!validateConfig(config)) {
       throw new NomicLabsHardhatPluginError(
         "@starboard/hardhat-verify",
@@ -40,7 +42,13 @@ task("starboard-verify", "Verify smart contract on Starboard blockchain explorer
       );
     }
 
-    const body = await createVerifyBody(contractName, buildInfo)
+    if (args.contractAddress === 'metadata') {
+      const contractMeta = buildInfo[contractName]?.metadata
+      writeMetaFile(contractMeta, contractName)
+      return;
+    }
+
+    const body = await createFormData(contractName, buildInfo);
 
     try {
       console.log('verifing...')
@@ -66,28 +74,6 @@ task("starboard-verify", "Verify smart contract on Starboard blockchain explorer
       );
     }
   });
-
-
-async function getBuildInfo(contractName: string, artifacts: Artifacts) {
-  const allNames = await artifacts.getAllFullyQualifiedNames()
-  const fn = allNames.find(s => s.split(':').pop() === contractName)!
-  const [pathName, conName] = fn!?.split(':')
-  const buildInfo = await artifacts.getBuildInfo(fn)
-  const info = buildInfo?.output.contracts[pathName]! as unknown as { [k: string]: { metadata: string } }
-  return info;
-}
-
-async function createVerifyBody(contractName: string, buildInfo: any) {
-  const contractMeta = buildInfo[contractName]?.metadata
-  const formData = new FormData()
-  //required metadata file.
-  formData.append('metadata.json', Buffer.from(contractMeta), 'metadata.json')
-  Object.entries(JSON.parse(contractMeta)?.sources as { [k: string]: { content: string } }).map(([k, v]) => {
-    formData.append(k, Buffer.from(v.content), k)
-  })
-  return formData;
-}
-
 
 function validateArgs(args: TaskArguments): boolean {
   return args.contractName !== null && args.contractAddress !== null;
