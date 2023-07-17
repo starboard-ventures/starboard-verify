@@ -7,13 +7,12 @@
     "sourceMap": true,
     "outDir": "./dist",
     "strict": true,
-    "rootDirs": ["./"],
+    "rootDirs": ["./src", "./test"],
     "esModuleInterop": true
   },
   "exclude": ["dist", "node_modules"],
-  "files": ["./index.ts", "./utils.ts"],
   "include": [
-    "./*.ts",
+    "./test",
     "./src"
   ]
 }

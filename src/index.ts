@@ -1,8 +1,8 @@
 import { extendConfig } from "hardhat/config";
 import { HardhatConfig, HardhatUserConfig } from "hardhat/types";
 
-import "./src/tasks/starboard-verify";
-import "./src/type-extensions";
+import "./tasks/starboard-verify";
+import "./type-extensions";
 
 extendConfig(
   (config: HardhatConfig, userConfig: Readonly<HardhatUserConfig>) => {
@@ -10,4 +10,5 @@ extendConfig(
   }
 );
 
-export * from "./src/types";
+export * from "./types";
+export * from "./utils";
