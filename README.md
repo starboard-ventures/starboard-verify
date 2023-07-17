@@ -65,4 +65,26 @@ This plugin adds the `starboard-verify` task to Hardhat:
 ```bash
 npx hardhat starboard-verify <CONTRACT_NAME> <CONTRACT_ADDRESS>
 ```
+Also you can generate the metadata.json of a contract, it will be saved with a name of <CONTRACT_NAME>_Metadata.json in your root dir:
+```bash
+npx hardhat starboard-verify <CONTRACT_NAME> metadata
+```
 
+## Tasks
+You can create your own script with this plugin
+
+```js
+const { StarboardVerify, generateMetadata } = require('starboard-hardhat-verify/dist/utils')
+
+async function verify() {
+  const verify = new StarboardVerify({
+    baseURL: 'https://fvm-calibration-api.starboard.ventures',
+    network: 'Calibration',
+    contractName: 'BigDataAuctionImpl',
+    contractAddress: '0x5588c33dFF7e3A1831D41B0E3aBdD4D67E897a02',
+  })
+  await generateMetadata('BigDataAuctionImpl')
+  await verify.verify()
+}
+verify();
+```
