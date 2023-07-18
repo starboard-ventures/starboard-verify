@@ -17,7 +17,7 @@ task("starboard-verify", "Verify smart contract on Starboard blockchain explorer
   ) {
     if (!validateArgs(args)) {
       throw new NomicLabsHardhatPluginError(
-        "starboard-hardhat-verify",
+        "@starboardventures/hardhat-verify",
         "Missing args for this task"
       );
     }
@@ -27,7 +27,7 @@ task("starboard-verify", "Verify smart contract on Starboard blockchain explorer
 
     if (!validateConfig(config)) {
       throw new NomicLabsHardhatPluginError(
-        "starboard-hardhat-verify",
+        "@starboardventures/hardhat-verify",
         "Invalid starboardConfig for this task"
       );
     }
@@ -37,7 +37,7 @@ task("starboard-verify", "Verify smart contract on Starboard blockchain explorer
     const buildInfo = await getBuildInfo(contractName, artifacts)
     if (!buildInfo) {
       throw new NomicLabsHardhatPluginError(
-        "starboard-hardhat-verify",
+        "@starboardventures/hardhat-verify",
         "Invalid build info for this task"
       );
     }
@@ -63,13 +63,13 @@ task("starboard-verify", "Verify smart contract on Starboard blockchain explorer
         console.log(`${contractName} at ${contractAddress} is verified successfully`);
       } else {
         throw new NomicLabsHardhatPluginError(
-          "starboard-hardhat-verify",
+          "@starboardventures/hardhat-verify",
           data.message || "Failed to verify contract"
         );
       }
     } catch (e) {
       throw new NomicLabsHardhatPluginError(
-        "starboard-hardhat-verify",
+        "@starboardventures/hardhat-verify",
         (e as { message: string })?.message || "Failed to verify contract"
       );
     }

@@ -1,4 +1,4 @@
-# starboard-hardhat-verify
+# @starboardventures/hardhat-verify
 
 [Hardhat](https://hardhat.org) plugin for solidity contract verification on Starboard block explorer
 
@@ -17,19 +17,19 @@ git clone https://github.com/filecoin-project/fevm-hardhat-kit
 
 
 ```bash
-npm install starboard-hardhat-verify
+npm install @starboardventures/hardhat-verify
 ```
 
 Import the plugin in your `hardhat.config.js`:
 
 ```js
-require("starboard-hardhat-verify");
+require("@starboardventures/hardhat-verify");
 ```
 
 Or if you are using TypeScript, in your `hardhat.config.ts`:
 
 ```ts
-import "starboard-hardhat-verify";
+import "@starboardventures/hardhat-verify";
 ```
 
 
@@ -74,7 +74,7 @@ npx hardhat starboard-verify <CONTRACT_NAME> metadata
 You can create your own script with this plugin
 
 ```js
-const { StarboardVerify, generateMetadata } = require('starboard-hardhat-verify/dist/src/utils')
+const { StarboardVerify, generateMetadata } = require('@starboardventures/hardhat-verify/dist/src/utils')
 
 async function verify() {
   const verify = new StarboardVerify({
