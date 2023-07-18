@@ -1,6 +1,6 @@
 {
   "name": "starboard-hardhat-verify",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Hardhat plugin for solidity contract verification on Starboard block explorer",
   "repository": "github:starboard-ventures/starboard-verify.git",
   "author": "jerry",

@@ -74,7 +74,7 @@ npx hardhat starboard-verify <CONTRACT_NAME> metadata
 You can create your own script with this plugin
 
 ```js
-const { StarboardVerify, generateMetadata } = require('starboard-hardhat-verify/dist/utils')
+const { StarboardVerify, generateMetadata } = require('starboard-hardhat-verify/dist/src/utils')
 
 async function verify() {
   const verify = new StarboardVerify({
