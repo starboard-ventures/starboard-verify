@@ -8,17 +8,26 @@ Calibration: [https://fvm.starboard.ventures/calibration/explorer](https://fvm.s
 
 
 ## Installation
+If you need to create a new project, the [fevm-hardhat-kit](https://github.com/filecoin-project/fevm-hardhat-kit) has better support for FEVM chain, or you can inject it into your own project.
 
-Now the [fevm-hardhat-kit](https://github.com/filecoin-project/fevm-hardhat-kit) has better support for FEVM chain
-
+In a new project with [fevm-hardhat-kit](https://github.com/filecoin-project/fevm-hardhat-kit) :
 ```js
 git clone https://github.com/filecoin-project/fevm-hardhat-kit
+
+cd fevm-hardhat-kit
+
+yarn install
+
+yarn add @starboardventures/hardhat-verify
 ```
 
-
+Or in your own project :
 ```bash
-npm install @starboardventures/hardhat-verify
+yarn add @starboardventures/hardhat-verify
 ```
+
+## Configuration
+
 
 Import the plugin in your `hardhat.config.js`:
 
@@ -32,26 +41,13 @@ Or if you are using TypeScript, in your `hardhat.config.ts`:
 import "@starboardventures/hardhat-verify";
 ```
 
-
-## Configuration
-
-This plugin extends the `HardhatUserConfig` object with an optional `starboardConfig` field.
+This plugin depend on the `starboardConfig` field to distinguish environments, so if you need to use the Cli tools you need to set the config first.
 
 This is examples of how to set it:
 * Mainnet:
 ```js
 module.exports = {
- solidity: {
-    version: "0.8.17",
-    settings: {
-      optimizer: {
-        enabled: true,
-        runs: 2000,
-        details: { yul: false },
-      },
-    },
-  },
-  defaultNetwork: "calibrationnet",
+  solidity: {},
   starboardConfig: {
     baseURL: 'https://fvm-api.starboard.ventures',
     network: 'Mainnet' // if there's no baseURL, url will depend on the network.  Mainnet || Calibration
@@ -61,15 +57,20 @@ module.exports = {
 * Calibration Testnet:
 ```js
 module.exports = {
- solidity: {
+  solidity: {
     version: "0.8.17",
   },
-  defaultNetwork: "calibrationnet",
   starboardConfig: {
       baseURL: 'https://fvm-calibration-api.starboard.ventures',
       network: 'Calibration' // if there's no baseURL, url will depend on the network.  Mainnet || Calibration
   },
 };
+```
+## Compile
+
+You need to complie you smart contracts first.
+```bash
+npx hardhat compile
 ```
 
 ## Cli
