@@ -11,7 +11,7 @@ import { VerifyArgsCaller, NetworkHost } from './types'
 export async function fetchVerify({ baseURL, contractAddress, body, network }: VerifyArgsCaller) {
   const host = baseURL || network === 'Calibration' ? NetworkHost.Calibration : NetworkHost.Mainnet
   return fetch(
-    `${host}/api/v1/contract/${contractAddress}/verify`,
+    `${host}/api/v1/contract/${contractAddress}/verify?from=plugin`,
     {
       method: "POST",
       body,
