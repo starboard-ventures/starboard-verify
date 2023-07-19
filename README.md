@@ -1,16 +1,23 @@
 # @starboardventures/hardhat-verify
 
-[Hardhat](https://hardhat.org) plugin for solidity contract verification on Starboard block explorer
+
+The @starboardventures/hardhat-verify is a [Hardhat](https://hardhat.org) plugin designed and developed for the source code verification of Solidity contracts on the Filecoin Virtual Machine (FVM) with the Starboard FVM Explorer. This plugin supports both the Mainnet and the Calibration Testnet.
+
+Starboard FVM Explorer:
 
 Mainnet: [https://fvm.starboard.ventures/explorer](https://fvm.starboard.ventures/explorer)
 
-Calibration: [https://fvm.starboard.ventures/calibration/explorer](https://fvm.starboard.ventures/calibration/explorer)
+Calibration Testnet: [https://fvm.starboard.ventures/calibration/explorer](https://fvm.starboard.ventures/calibration/explorer)
 
 
 ## Installation
-If you need to create a new project, the [fevm-hardhat-kit](https://github.com/filecoin-project/fevm-hardhat-kit) has better support for FEVM chain, or you can inject it into your own project.
-
-In a new project with [fevm-hardhat-kit](https://github.com/filecoin-project/fevm-hardhat-kit) :
+### In an existing project:
+You can add the plugin to your existing project by running:
+```bash
+yarn add @starboardventures/hardhat-verify
+```
+### In a new project:
+If you're setting up a new project, the [fevm-hardhat-kit](https://github.com/filecoin-project/fevm-hardhat-kit) provides better support for the FEVM chain. Here's how to set it up:
 ```js
 git clone https://github.com/filecoin-project/fevm-hardhat-kit
 
@@ -21,14 +28,9 @@ yarn install
 yarn add @starboardventures/hardhat-verify
 ```
 
-Or in your own project :
-```bash
-yarn add @starboardventures/hardhat-verify
-```
-
 ## Configuration
 
-
+The plugin can be imported into your hardhat.config.js file:
 Import the plugin in your `hardhat.config.js`:
 
 ```js
@@ -41,10 +43,12 @@ Or if you are using TypeScript, in your `hardhat.config.ts`:
 import "@starboardventures/hardhat-verify";
 ```
 
-This plugin depend on the `starboardConfig` field to distinguish environments, so if you need to use the Cli tools you need to set the config first.
+This plugin depends on the `starboardConfig` field in your Hardhat config to distinguish between different network environments. To use the CLI tools, this config needs to be set up first. 
 
-This is examples of how to set it:
-* Mainnet:
+
+Here's an example for both the Mainnet and Calibration Testnet:
+
+Mainnet:
 ```js
 module.exports = {
   solidity: {},
@@ -54,7 +58,7 @@ module.exports = {
   },
 };
 ```
-* Calibration Testnet:
+Calibration Testnet:
 ```js
 module.exports = {
   solidity: {
@@ -66,27 +70,29 @@ module.exports = {
   },
 };
 ```
-## Compile
+## Usage
+### Compile
 
-You need to complie you smart contracts first.
+Before you verify a contract, you need to compile it first:
 ```bash
 npx hardhat compile
 ```
 
-## Cli
+### Cli
 
 This plugin adds the `starboard-verify` task to Hardhat :
 ```bash
 npx hardhat starboard-verify <CONTRACT_NAME> <CONTRACT_ADDRESS>
 ```
-Also you can generate the metadata.json of a contract, it will be saved with a name of <CONTRACT_NAME>_Metadata.json in your root dir:
+Additionally, you can generate a metadata.json file for a contract. This will save the metadata in a file named <CONTRACT_NAME>_Metadata.json in your root directory:
 ```bash
 npx hardhat starboard-verify <CONTRACT_NAME> metadata
 ```
 
-## Script
-You can create your own script with this plugin, before executing, make sure that compile has been executed and that resource of artifacts are available.:
-* Mainnet:
+### Script
+You can also write a script to use this plugin. Make sure to compile your contracts and have the artifacts available before running the script:
+
+Mainnet:
 ```js
 const { StarboardVerify, generateMetadata } = require('@starboardventures/hardhat-verify/dist/src/utils')
 
@@ -102,7 +108,7 @@ async function verify() {
 verify();
 ```
 
-* Calibration Testnet:
+Calibration Testnet:
 ```js
 const { StarboardVerify, generateMetadata } = require('@starboardventures/hardhat-verify/dist/src/utils')
 

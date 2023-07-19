@@ -16,7 +16,7 @@ declare module "hardhat/types/config" {
   }
 
   export interface StarboardVerifyConfig {
-    baseURL: string
+    baseURL?: string
     network?: Networks
   }
 
