@@ -123,3 +123,6 @@ async function verify() {
 }
 verify();
 ```
+
+**Note:** 
+For contracts that are newly deployed, the Starboard FVM Explorer will require some time to index them. The indexing time is approximately 30 seconds on Calibration, and around 1-2 minutes on Mainnet. Please ensure that they are indexed by the Starboard FVM Explorer before proceeding with verification, otherwise an error stating `resource not found` will be returned.
